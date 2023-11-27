@@ -28,5 +28,14 @@ int main(){
     printf("No of games: %d\n", no_games);
     print_array(no_games, game_scores);
 
+    //compress high_scores array
+    int *short_high_scores;
+    int no_players = 0;
+    short_high_scores = select_distinct_ints(high_scores, n, &no_players);
+    free(high_scores);
+
+    printf("No of players: %d\n", no_players);
+    print_array(no_players, (int *)short_high_scores);
+
     exit(EXIT_SUCCESS);
 }
