@@ -142,3 +142,24 @@ int index_of(int *elem, int n, int *arr){
     if(index < n) return index;
     return -1;
 }
+
+/**
+ * @param a: sorted array of integers
+ * @int n: number of elements in a
+ * @param result: pointer to an integer array containing distinct integers from a
+ * @returns a number of distinct integers in a
+ */
+int select_distinct_ints(int *a, int n, int *result){
+    int *result = (int *)malloc(n * sizeof(int));
+    result[0] = a[0];
+    int no = 0;
+    for(int i = 0; i < n; ++i){
+        temp = a[i];
+        if(result[no] != a[i]){
+            ++no;
+            result[no] = a[i];
+        }
+    }
+    realloc(result, (no + 1) * sizeof(int));
+    return no + 1;
+}
