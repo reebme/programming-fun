@@ -47,8 +47,15 @@ char* get_line(){
     while(!stop){
         /* reads at most buff_size characters from stdin until stream empty and waits for more */
         if(buff_size == line_length + 1){
+            cursor = NULL; /* important for when realloc moves buffer to a new place */
             buff_size = buff_size * 2;
-            buff = (char *)realloc(buff, buff_size * sizeof(char));
+            buff = (char *)realloc(buff, buff_size);
+            /*
+            // if realloc fails buffer content already read is not lost
+            // it really doesn't matter though
+            char *temp_buff = (char *)realloc(buff, buff_size);
+            if(temp_buff) buff = temp_buff; */
+            cursor = buff + line_length;
         }
         fgets(cursor, buff_size - line_length, stdin);
         line_length = strlen(buff);
