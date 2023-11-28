@@ -27,6 +27,7 @@ int main(){
     print_array(n, (int *)high_scores);
     printf("No of games: %d\n", no_games);
     print_array(no_games, game_scores);
+    printf("\n");
 
     //compress high_scores array
     int *short_high_scores;
@@ -36,6 +37,8 @@ int main(){
 
     printf("No of players: %d\n", no_players);
     print_array(no_players, (int *)short_high_scores);
+
+    
 
     exit(EXIT_SUCCESS);
 }
