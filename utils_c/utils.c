@@ -170,3 +170,14 @@ int *select_distinct_ints(int *a, int n, int *no){
     ++(*no);
     return result;
 }
+
+/**
+ * Performs binary search of a predecessor (arg max of larger elements) of e in an ordered array of integers.
+ * @param a: array of integers
+ * @param n: # of elements in a
+ * @param e: element of which a predecessor is searched
+ * @returns a pointer to a predecessor
+ */
+int *bin_search_pred(int *a, int n, int e){
+
+}
