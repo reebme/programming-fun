@@ -172,12 +172,27 @@ int *select_distinct_ints(int *a, int n, int *no){
 }
 
 /**
- * Performs binary search of a predecessor (arg max of larger elements) of e in an ordered array of integers.
- * @param a: array of integers
+ * Performs binary search of a predecessor (arg min of larger elements) of e in an ordered array of distinct integers.
+ * @param a: an array of distinct integers sorted in descending order
  * @param n: # of elements in a
  * @param e: element of which a predecessor is searched
  * @returns a pointer to a predecessor
  */
-int *bin_search_pred(int *a, int n, int e){
-
+int bin_search_pred(int *a, int n, int e){
+    int pred = 0;
+    int succ = 0;
+    int root = 0;
+    int no_elem = n;
+    int temp;
+    while(no_elem > 0){
+        temp = no_elem / 2;
+        no_elem = temp;
+        root = root + temp; //integer division, indexes always > 0
+        printf("Root %d\n", root);
+        pred = temp / 2;
+        succ = root + root / 2;
+        if(e < a[root]) root = root / 2;
+        else if (e > a[root]) root = root + root / 2;
+        else return root;
+    }
 }
