@@ -179,20 +179,38 @@ int *select_distinct_ints(int *a, int n, int *no){
  * @returns a pointer to a predecessor
  */
 int bin_search_pred(int *a, int n, int e){
+    int start = 0;
+    int end = n - 1;
     int pred = 0;
     int succ = 0;
-    int root = 0;
     int no_elem = n;
-    int temp;
-    while(no_elem > 0){
+    int root = no_elem / 2; //middle element
+    do {
+        no_elem = no_elem / 2;
+        //middle element to the left of root
+        pred = (root - start)/2;
+        //middle element to the right of the root
+        succ = root + (end - root)/2;
+        if (e < a[root]){
+            if(root == pred) return root;
+            end = root - 1;
+            root = pred;
+        } else if (e > a[root]){
+            if (root == succ) return root;
+            start = root;
+            root = succ;
+        }
+        else return root - 1;
+    } while (no_elem > 0);
+    /*while(no_elem > 0){
         temp = no_elem / 2;
         no_elem = temp;
         root = root + temp; //integer division, indexes always > 0
         printf("Root %d\n", root);
         pred = temp / 2;
         succ = root + root / 2;
-        if(e < a[root]) root = root / 2;
-        else if (e > a[root]) root = root + root / 2;
-        else return root;
-    }
+        if(e < a[root]) root = succ;
+        else if (e > a[root]) root = pred;
+        else return root - 1;
+    }*/
 }
