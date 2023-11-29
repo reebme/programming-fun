@@ -176,41 +176,24 @@ int *select_distinct_ints(int *a, int n, int *no){
  * @param a: an array of distinct integers sorted in descending order
  * @param n: # of elements in a
  * @param e: element of which a predecessor is searched
- * @returns a pointer to a predecessor
+ * @returns an index of the predecessor
  */
 int bin_search_pred(int *a, int n, int e){
     int start = 0;
     int end = n - 1;
-    int pred = 0;
-    int succ = 0;
-    int no_elem = n;
-    int root = no_elem / 2; //middle element
-    do {
-        no_elem = no_elem / 2;
-        //middle element to the left of root
-        pred = (root - start)/2;
-        //middle element to the right of the root
-        succ = root + (end - root)/2;
-        if (e < a[root]){
-            if(root == pred) return root;
-            end = root - 1;
-            root = pred;
-        } else if (e > a[root]){
-            if (root == succ) return root;
-            start = root;
-            root = succ;
-        }
-        else return root - 1;
-    } while (no_elem > 0);
-    /*while(no_elem > 0){
-        temp = no_elem / 2;
-        no_elem = temp;
-        root = root + temp; //integer division, indexes always > 0
-        printf("Root %d\n", root);
-        pred = temp / 2;
-        succ = root + root / 2;
-        if(e < a[root]) root = succ;
-        else if (e > a[root]) root = pred;
-        else return root - 1;
-    }*/
+    int mid;
+    while(start <= end){
+        mid = start + (end - start)/2;
+        if(a[mid] < e){
+            //go left
+            end = mid - 1;
+        } else if(a[mid] > e){
+            //go right
+            start = mid + 1;
+        } else return mid - 1;
+    }
+    // no elements on the left
+    if(mid - start == 0) return mid - 1;
+    // no elements on the right
+    else return mid;
 }
