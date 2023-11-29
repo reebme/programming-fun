@@ -170,3 +170,30 @@ int *select_distinct_ints(int *a, int n, int *no){
     ++(*no);
     return result;
 }
+
+/**
+ * Performs binary search of a predecessor (arg min of larger elements) of e in an ordered array of distinct integers.
+ * @param a: an array of distinct integers sorted in descending order
+ * @param n: # of elements in a
+ * @param e: element of which a predecessor is searched
+ * @returns an index of the predecessor
+ */
+int bin_search_pred(int *a, int n, int e){
+    int start = 0;
+    int end = n - 1;
+    int mid;
+    while(start <= end){
+        mid = start + (end - start)/2;
+        if(a[mid] < e){
+            //go left
+            end = mid - 1;
+        } else if(a[mid] > e){
+            //go right
+            start = mid + 1;
+        } else return mid - 1;
+    }
+    // no elements on the left
+    if(mid - start == 0) return mid - 1;
+    // no elements on the right
+    else return mid;
+}
