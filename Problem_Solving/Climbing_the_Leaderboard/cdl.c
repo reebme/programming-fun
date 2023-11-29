@@ -37,8 +37,11 @@ int main(){
 
     printf("No of players: %d\n", no_players);
     print_array(no_players, (int *)short_high_scores);
+    printf("\n");
 
-    
+    for(int i=0; i < no_games; ++i){
+        printf("Predecessor of %d: %d\n", game_scores[i], bin_search_pred((int *)short_high_scores, no_players, game_scores[i]) + 2);
+    } 
 
     exit(EXIT_SUCCESS);
 }
