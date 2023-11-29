@@ -47,8 +47,15 @@ char* get_line(){
     while(!stop){
         /* reads at most buff_size characters from stdin until stream empty and waits for more */
         if(buff_size == line_length + 1){
+            cursor = NULL; /* important for when realloc moves buffer to a new place */
             buff_size = buff_size * 2;
-            buff = (char *)realloc(buff, buff_size * sizeof(char));
+            buff = (char *)realloc(buff, buff_size);
+            /*
+            // if realloc fails buffer content already read is not lost
+            // it really doesn't matter though
+            char *temp_buff = (char *)realloc(buff, buff_size);
+            if(temp_buff) buff = temp_buff; */
+            cursor = buff + line_length;
         }
         fgets(cursor, buff_size - line_length, stdin);
         line_length = strlen(buff);
@@ -141,4 +148,52 @@ int index_of(int *elem, int n, int *arr){
     int index = elem - arr;
     if(index < n) return index;
     return -1;
+}
+
+/**
+ * @param a: sorted array of integers
+ * @int n: number of elements in a
+ * @param no: pointer to an integer which will contain the number of elements in the result
+ * @return pointer to an integer array containing distinct integers from a
+ */
+int *select_distinct_ints(int *a, int n, int *no){
+    int *result = (int *)malloc(n * sizeof(int));
+    result[0] = a[0];
+    *no = 0;
+    for(int i = 0; i < n; ++i){
+        if(result[*no] != a[i]){
+            ++(*no);
+            result[*no] = a[i];
+        }
+    }
+    result = realloc(result, (*no + 1) * sizeof(int));
+    ++(*no);
+    return result;
+}
+
+/**
+ * Performs binary search of a predecessor (arg min of larger elements) of e in an ordered array of distinct integers.
+ * @param a: an array of distinct integers sorted in descending order
+ * @param n: # of elements in a
+ * @param e: element of which a predecessor is searched
+ * @returns an index of the predecessor
+ */
+int bin_search_pred(int *a, int n, int e){
+    int start = 0;
+    int end = n - 1;
+    int mid;
+    while(start <= end){
+        mid = start + (end - start)/2;
+        if(a[mid] < e){
+            //go left
+            end = mid - 1;
+        } else if(a[mid] > e){
+            //go right
+            start = mid + 1;
+        } else return mid - 1;
+    }
+    // no elements on the left
+    if(mid - start == 0) return mid - 1;
+    // no elements on the right
+    else return mid;
 }
