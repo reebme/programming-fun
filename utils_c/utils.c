@@ -68,6 +68,8 @@ char* get_line(){
         if(strchr(buff, '\n'))  //might be quicker to check buff[line_length - 1]
             stop = true;
     }
+    cursor = NULL;
+    buff = (char *)realloc(buff, line_length + 1);
     //should the buffer be allocated to reflect the exact length of the string?
     return(buff);
 }
@@ -101,6 +103,18 @@ void print_matrix(int rows, int cols, int **arr){
             printf("%d ", arr[i][j]);
         printf("\n");
     }
+}
+
+//TODO function which recognizes type and calls appropriate print fuction for an array
+
+/**
+ * Prints array of strings to stdout.
+ * @param a: array of strings
+ * @param n: # of elements in a
+ */
+void print_str_array(char *arr, int n){
+    for(int i = 0; i < n; ++i)
+        printf("%s\n", arr[i]);
 }
 
 void print_array(int n, int *arr){
