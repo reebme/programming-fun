@@ -112,7 +112,7 @@ void print_matrix(int rows, int cols, int **arr){
  * @param a: array of strings
  * @param n: # of elements in a
  */
-void print_str_array(char *arr, int n){
+void print_str_array(char **arr, int n){
     for(int i = 0; i < n; ++i)
         printf("%s\n", arr[i]);
 }

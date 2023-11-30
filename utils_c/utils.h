@@ -9,4 +9,4 @@ int *generate_array(int n, int min_val, int max_val);
 int index_of(int *elem, int n, int *arr);
 int *select_distinct_ints(int *, int, int *);
 int bin_search_pred(int *a, int n, int e);
-void print_str_array(char *arr, int n);
+void print_str_array(char **arr, int n);
