@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <time.h>
+#include <ctype.h>
 #include <utils.h>
 
 /**
@@ -72,6 +73,27 @@ char* get_line(){
     buff = (char *)realloc(buff, line_length + 1);
     //should the buffer be allocated to reflect the exact length of the string?
     return(buff);
+}
+
+/**
+ * STRING MANIPULATION
+ */
+/**
+ * Removes trailing whitespace characters from string s substituting '\0' effectively shortening the string.
+ * Original string is modified in place, no operations on memory are performed.
+ * @param s: pointer to a string which is shortened;
+ * @param len: length of the string
+ */
+int rtrim(char *s, size_t len){
+    int result_len = len;
+    for(int i = len - 1; i >=0; ++i){
+        //isspace requires integer input, so char is converted to unsigned char to avoid problems with implicit char -> int conversion
+        if(isspace((unsigned char)s[i])){
+            s[i] = '\0';
+            --result_len;
+        }
+    }
+    return result_len;
 }
 
 int read_int(char *buff){
