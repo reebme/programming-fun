@@ -15,9 +15,12 @@ char *counting_sort(char **a, int *len, int n, int pos){
     int counter[10] = {0}; //or memset with 0
     // count the occurrences of each digit
     for(int i = 0; i < n; ++i){
-        if(len[i] - pos - 1 > 0){
+        // len[i] is length and len[i] - 1 is the index of the last element
+        // check if a digit at index len - 1 - pos exists
+        if(len[i] - 1 - pos >= 0){
             char digit[2] = {'\0'};
-            digit[0] = a[i][len[i] - pos];
+            // len[i] is length and len[i] - 1 is the index of the last element
+            digit[0] = a[i][len[i] - 1 - pos];
             ++counter[atoi(digit)];
         }
     }
