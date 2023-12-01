@@ -17,7 +17,7 @@ char *counting_sort(char **a, int *len, int n, int pos){
     for(int i = 0; i < n; ++i){
         if(len[i] - pos - 1 > 0){
             char digit[2] = {'\0'};
-            digit[0] = a[i][len[i] - pos - 1];
+            digit[0] = a[i][len[i] - pos];
             ++counter[atoi(digit)];
         }
     }
