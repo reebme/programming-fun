@@ -144,6 +144,24 @@ int min_array(int n, int *arr){
 }
 
 /*
+ * Searches for the largest element in an array of integers (O(n))
+ * @param arr pointer to the beginning
+ * @param n number of elements in the array
+ * @returns the index of the first max element
+ */
+int max_array(int n, int *arr){
+    int max_index = 0;
+    int max_int = INT_MIN;
+    for(int i = 0; i < n; ++i){
+        if(arr[i] > max_int){ 
+            max_index = i;
+            max_int = arr[i];
+        }
+    }
+    return max_index;
+}
+
+/*
  * Generates an array of n integers in the interval [min_val, max_val].
  */
 int *generate_array(int n, int min_val, int max_val){
