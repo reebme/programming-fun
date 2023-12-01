@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <time.h>
+#include <ctype.h>
 #include <utils.h>
 
 /**
@@ -74,6 +75,27 @@ char* get_line(){
     return(buff);
 }
 
+/**
+ * STRING MANIPULATION
+ */
+/**
+ * Removes trailing whitespace characters from string s substituting '\0' effectively shortening the string.
+ * Original string is modified in place, no operations on memory are performed.
+ * @param s: pointer to a string which is shortened;
+ * @param len: length of the string
+ */
+int rtrim(char *s, size_t len){
+    int result_len = len;
+    for(int i = len - 1; i >=0; ++i){
+        //isspace requires integer input, so char is converted to unsigned char to avoid problems with implicit char -> int conversion
+        if(isspace((unsigned char)s[i])){
+            s[i] = '\0';
+            --result_len;
+        }
+    }
+    return result_len;
+}
+
 int read_int(char *buff){
     return strtol(buff, NULL, 10);
 }
@@ -131,7 +153,7 @@ void print_array(int n, int *arr){
  * @param n number of elements in the array
  * @returns the index of the first min element
  */
-int min_array(int n, int *arr){
+int min_array(int *arr, int n){
     int min_index = 0;
     int min_int = INT_MAX;
     for(int i = 0; i < n; ++i){
@@ -149,7 +171,7 @@ int min_array(int n, int *arr){
  * @param n number of elements in the array
  * @returns the index of the first max element
  */
-int max_array(int n, int *arr){
+int max_array(int *arr, int n){
     int max_index = 0;
     int max_int = INT_MIN;
     for(int i = 0; i < n; ++i){

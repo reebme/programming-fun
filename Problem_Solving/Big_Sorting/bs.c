@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <utils.h>
+#include <sort_utils.h>
 
 int main(void){
     char* input = get_line();
@@ -17,4 +18,6 @@ int main(void){
         len[i] = strlen(integers[i]) - 1; //-1 to account for \n
         //printf("%s: %d\n", integers[i], len[i]);
     }
+    int max_int_len = len[max_array((int *)len, no_elem)];
+    radix_sort((char **)integers, (int *) len, no_elem, max_int_len);
 }
