@@ -131,7 +131,7 @@ void print_array(int n, int *arr){
  * @param n number of elements in the array
  * @returns the index of the first min element
  */
-int min_array(int n, int *arr){
+int min_array(int *arr, int n){
     int min_index = 0;
     int min_int = INT_MAX;
     for(int i = 0; i < n; ++i){
@@ -149,7 +149,7 @@ int min_array(int n, int *arr){
  * @param n number of elements in the array
  * @returns the index of the first max element
  */
-int max_array(int n, int *arr){
+int max_array(int *arr, int n){
     int max_index = 0;
     int max_int = INT_MIN;
     for(int i = 0; i < n; ++i){
