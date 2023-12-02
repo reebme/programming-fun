@@ -12,7 +12,7 @@
  * @returns pointer to an array of sorted integers represented by strings
  */
 char **counting_sort(char **a, int *len, int n, int pos){
-    int counter[10] = {0}; //or memset with 0
+    int counter[10] = {0}; //initialize counter with zeros
     int digit[n];
     // count the occurrences of each digit
     for(int i = 0; i < n; ++i){
@@ -46,7 +46,7 @@ char **counting_sort(char **a, int *len, int n, int pos){
  * @param max_int_len: max length of integer in the array a
  * @returns pointer to an array of sorted integers represented by strings
  */
-char *radix_sort(char **a, int *len, int n, int max_int_len){
+char **radix_sort(char **a, int *len, int n, int max_int_len){
     // from least significant to most significant digit
     char **result = a;
     int *result_len = len;
@@ -60,6 +60,7 @@ char *radix_sort(char **a, int *len, int n, int max_int_len){
         result = temp;
         result_len = (int *)malloc(n * sizeof(int));
         for(int i = 0; i < n; ++i) result_len[i] = strlen(result[i]) - 1;
-        print_str_array((char **)result, n);
+        //print_str_array((char **)result, n);
     }
+    return result;
 }
