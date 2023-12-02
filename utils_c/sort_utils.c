@@ -12,7 +12,7 @@
  * @returns pointer to an array of sorted integers represented by strings
  */
 char **counting_sort(char **a, int *len, int n, int pos){
-    int counter[10] = {0}; //or memset with 0
+    int counter[10] = {0}; //initialize counter with zeros
     int digit[n];
     // count the occurrences of each digit
     for(int i = 0; i < n; ++i){
