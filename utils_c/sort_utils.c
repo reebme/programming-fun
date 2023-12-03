@@ -5,24 +5,24 @@
 
 /**
  * Performs counting sort on a specific digit on an array of integers represented as strings.
+ * Sorting operation modifies the input array.
  * @param a: pointer to an array of strings representing integers
  * @param len: pointer to an array of integers representing the length of corresponding string in a
  * @param n: # of elements in a and len
  * @param pos: digit by which the integers are sorted, 0 is last, 1 is second to last and so on
- * @returns pointer to an array of sorted integers represented by strings
  */
-char **counting_sort(char **a, int *len, int n, int pos){
+void counting_sort(big_int *a, int n, int pos){
     int counter[10] = {0}; //initialize counter with zeros
-    int digit[n];
+    int digit[n]; //array representing digits to be sorted
     // count the occurrences of each digit
     for(int i = 0; i < n; ++i){
         // prepare a histogram of key frequencies
         // len[i] is length and len[i] - 1 is the index of the last element
         // check if a digit at index len - 1 - pos exists
-        if(len[i] - 1 - pos >= 0){
+        if(a[i].len - 1 - pos >= 0){
             unsigned char temp_digit[2] = {'\0'};
             // len[i] is length and len[i] - 1 is the index of the last element
-            temp_digit[0] = a[i][len[i] - 1 - pos];
+            temp_digit[0] = a[i].num[a[i].len - 1 - pos];
             digit[i] = atoi(temp_digit);
         } else digit[i] = 0;
         ++counter[digit[i]];
@@ -31,36 +31,25 @@ char **counting_sort(char **a, int *len, int n, int pos){
     for(int i = 1; i < 10; ++i){
         counter[i] += counter[i - 1];
     }
-    char **result = (char **)malloc(n * sizeof (char *));
+    big_int result[n];
     for(int i = n - 1; i >= 0; --i){
         --counter[digit[i]];
         result[counter[digit[i]]] = a[i];
     }
-    return result;
+    for(int i = 0; i < n; ++i) a[i] = result[i];
 }
 
 /**
  * Performs radix sort on an array of integers represented by strings.
- * @param a: an array of strings representing integers
+ * @param a: an array of pointers to strings representing integers
  * @param n: # of elements in a
- * @param max_int_len: max length of integer in the array a
- * @returns pointer to an array of sorted integers represented by strings
+ * @returns pointer to an array of sorted integers represented as strings
  */
-char **radix_sort(char **a, int *len, int n, int max_int_len){
-    // from least significant to most significant digit
-    char **result = a;
-    int *result_len = len;
-    char **temp;
+void radix_sort(big_int *a, int n, size_t max_int_len){
+    // from least significant to most significant digit (right to left)
     for(int i = 0; i < max_int_len; ++i){
-        char **temp = counting_sort(result, result_len, n, i);
-        if(i != 0){
-            free(result);
-            free(result_len);
-        }
-        result = temp;
-        result_len = (int *)malloc(n * sizeof(int));
-        for(int i = 0; i < n; ++i) result_len[i] = strlen(result[i]) - 1;
+        //perform counting sort on a digit at ith position
+        counting_sort(a, n, i);
         //print_str_array((char **)result, n);
     }
-    return result;
 }
