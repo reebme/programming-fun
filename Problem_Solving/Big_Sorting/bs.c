@@ -26,11 +26,16 @@ int main(void){
     }
     end = clock();
     time_elapsed = ((double)(end - start))/CLOCKS_PER_SEC;
-    printf("Time elapsed on reading input: %d seconds\n", time_elapsed);
+    printf("Time elapsed on reading and preprocessing input: %f seconds\n", time_elapsed);
     
     start = clock();
     radix_sort((big_int *)integers, no_elem, max_int_len);
     end = clock();
     time_elapsed = ((double)(end - start))/CLOCKS_PER_SEC;
-    printf("Time elapsed on radix sort: %d seconds\n", time_elapsed);
+    printf("Time elapsed on radix sort: %f \n", time_elapsed);
+
+    for(int i = 0; i < no_elem; ++i){
+        printf("%s\n", integers[i].num);
+        free(integers[i].num);
+    }
 }
