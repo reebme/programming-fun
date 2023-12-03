@@ -84,15 +84,16 @@ char* get_line(){
  * @param s: pointer to a string which is shortened;
  * @param len: length of the string
  */
-int rtrim(char *s, size_t len){
-    int result_len = len;
-    for(int i = len - 1; i >=0; ++i){
-        //isspace requires integer input, so char is converted to unsigned char to avoid problems with implicit char -> int conversion
-        if(isspace((unsigned char)s[i])){
+size_t rtrim(char *s){
+    size_t result_len = strlen(s);
+    int i = result_len - 1;
+    do{
+        if( isspace(s[i]) ){
             s[i] = '\0';
             --result_len;
-        }
-    }
+            --i;
+        } else i = -1;
+    } while (i >= 0);
     return result_len;
 }
 
