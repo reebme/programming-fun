@@ -36,9 +36,10 @@ char* get_line_by_char(){
 }
 
 /**
- * Gets a line of input from stdin into a buffer.
+ * Gets a line of input from a file in_file into a buffer.
+ * If the file is stdin, maximum line length LINE_MAX (most often 4096) from limits.h applies and any characters beyond are truncated and lost.
  */
-char* get_line(){
+char* get_line(FILE *in_file){
     int buff_size = 256;
     char *buff = (char *)malloc(buff_size * sizeof(char));
     int line_length = 0;    //no of characters read
@@ -58,7 +59,7 @@ char* get_line(){
             if(temp_buff) buff = temp_buff; */
             cursor = buff + line_length;
         }
-        fgets(cursor, buff_size - line_length, stdin);
+        fgets(cursor, buff_size - line_length, in_file);
         line_length = strlen(buff);
         //printf("Line length: %d\n", line_length);
         cursor = buff + line_length; //check \0
