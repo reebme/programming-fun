@@ -5,8 +5,10 @@
 #include <utils.h>
 #include <sort_utils.h>
 
-int main(void){
-    char* input = get_line();
+int main(int argc, char *argv[]){
+    printf("%s\n", argv[1]);
+    FILE *in_file = fopen(argv[1], "r");
+    char* input = get_line(in_file);
     // number of elements to be sorted
     int no_elem = read_int(input);
     free(input);
@@ -19,11 +21,12 @@ int main(void){
     size_t max_int_len = 0;
     start = clock();
     for(int i = 0; i < no_elem; ++i){
-        integers[i].num = get_line();
+        integers[i].num = get_line(in_file);
         integers[i].len = rtrim(integers[i].num); // trim \n at the end
         if(max_int_len < integers[i].len)
             max_int_len = integers[i].len;
     }
+    fclose(in_file);
     end = clock();
     time_elapsed = ((double)(end - start))/CLOCKS_PER_SEC;
     printf("Time elapsed on reading and preprocessing input: %f seconds\n", time_elapsed);
