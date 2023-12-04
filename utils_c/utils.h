@@ -1,5 +1,7 @@
+#include <stdio.h>
+
 char* get_line_by_char();
-char* get_line();
+char* get_line(FILE *in_file);
 int read_int(char *);
 int read_n_ints(int, char *, int *);
 void print_matrix(int, int, int **);
