@@ -19,10 +19,11 @@ void counting_sort(big_int *a, int n, int pos){
         // prepare a histogram of key frequencies
         // len[i] is length and len[i] - 1 is the index of the last element
         // check if a digit at index len - 1 - pos exists
-        if(a[i].len - 1 - pos >= 0){
-            unsigned char temp_digit[2] = {'\0'};
+        int idx_at_pos = (int)a[i].len - 1 - pos;
+        if(idx_at_pos >= 0){
+            char temp_digit[2] = {'\0'};
             // len[i] is length and len[i] - 1 is the index of the last element
-            temp_digit[0] = a[i].num[a[i].len - 1 - pos];
+            temp_digit[0] = a[i].num[idx_at_pos];
             digit[i] = atoi(temp_digit);
         } else digit[i] = 0;
         ++counter[digit[i]];
