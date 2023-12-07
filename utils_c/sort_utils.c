@@ -97,7 +97,43 @@ void radix_sort(big_int *a, int n, size_t max_int_len){
     // from least significant to most significant digit (right to left)
     for(int i = 0; i < max_int_len; ++i){
         //perform counting sort on a digit at ith position
-        counting_sort(a, n, i);
+        counting_sort_num(a, n, i);
         //print_str_array((char **)result, n);
     }
+}
+
+/**
+ * Performs radix sort on an array of integers represented by strings first assigning each integer to a bucket according to it's length.
+ * Useful for integers of highly variable lengths.
+ * @param a: an array of pointers to strings representing integers
+ * @param n: # of elements in a
+ * @returns pointer to an array of sorted integers represented as strings
+ */
+void radix_sort_with_buckets(big_int *a, int n, size_t max_len_len){
+    // sort numbers represented by strings by length
+    // from least significant to most significant digit (right to left)
+    for(int i = 0; i < max_len_len; ++i){
+        //perform counting sort on a digit at ith position
+        counting_sort_len(a, n, i);
+        //print_str_array((char **)result, n);
+    }
+    // sort strings in buckets
+    int bucket = 0;
+    int bucket_item_cnt = 0;
+    big_int *start = a;
+    for(int i = 0; i < n; ++i){
+        if(a[i].len == bucket)
+            ++bucket_item_cnt;
+        else{
+            //sort current bucket
+            if(bucket_item_cnt > 1)
+                radix_sort(start, bucket_item_cnt, start->len);
+            start = a + i;
+            bucket = a[i].len;
+            bucket_item_cnt = 1;
+        }
+    }
+    // sort the last bucket
+    if(bucket_item_cnt > 1)
+        radix_sort(start, bucket_item_cnt, start->len);
 }

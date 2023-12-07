@@ -8,3 +8,4 @@ int digit_no(int num);
 void counting_sort_num(big_int *a, int n, int pos);
 void counting_sort_len(big_int *a, int n, int pos);
 void radix_sort(big_int *a, int n, size_t max_int_len);
+void radix_sort_with_buckets(big_int *a, int n, size_t max_len_len);
