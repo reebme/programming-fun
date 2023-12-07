@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <time.h>
+#include <ctype.h>
 #include <utils.h>
 
 /**
@@ -35,9 +36,10 @@ char* get_line_by_char(){
 }
 
 /**
- * Gets a line of input from stdin into a buffer.
+ * Gets a line of input from a file in_file into a buffer.
+ * If the file is stdin, maximum line length LINE_MAX (most often 4096) from limits.h applies and any characters beyond are truncated and lost.
  */
-char* get_line(){
+char* get_line(FILE *in_file){
     int buff_size = 256;
     char *buff = (char *)malloc(buff_size * sizeof(char));
     int line_length = 0;    //no of characters read
@@ -57,7 +59,7 @@ char* get_line(){
             if(temp_buff) buff = temp_buff; */
             cursor = buff + line_length;
         }
-        fgets(cursor, buff_size - line_length, stdin);
+        fgets(cursor, buff_size - line_length, in_file);
         line_length = strlen(buff);
         //printf("Line length: %d\n", line_length);
         cursor = buff + line_length; //check \0
@@ -68,8 +70,32 @@ char* get_line(){
         if(strchr(buff, '\n'))  //might be quicker to check buff[line_length - 1]
             stop = true;
     }
+    cursor = NULL;
+    buff = (char *)realloc(buff, line_length + 1);
     //should the buffer be allocated to reflect the exact length of the string?
     return(buff);
+}
+
+/**
+ * STRING MANIPULATION
+ */
+/**
+ * Removes trailing whitespace characters from string s substituting '\0' effectively shortening the string.
+ * Original string is modified in place, no operations on memory are performed.
+ * @param s: pointer to a string which is shortened;
+ * @param len: length of the string
+ */
+size_t rtrim(char *s){
+    size_t result_len = strlen(s);
+    int i = result_len - 1;
+    do{
+        if( isspace(s[i]) ){
+            s[i] = '\0';
+            --result_len;
+            --i;
+        } else i = -1;
+    } while (i >= 0);
+    return result_len;
 }
 
 int read_int(char *buff){
@@ -103,6 +129,18 @@ void print_matrix(int rows, int cols, int **arr){
     }
 }
 
+//TODO function which recognizes type and calls appropriate print fuction for an array
+
+/**
+ * Prints array of strings to stdout.
+ * @param a: array of strings
+ * @param n: # of elements in a
+ */
+void print_str_array(char **arr, int n){
+    for(int i = 0; i < n; ++i)
+        printf("%s\n", arr[i]);
+}
+
 void print_array(int n, int *arr){
     for(int i = 0; i < n; ++i){
         //TODO alignement
@@ -117,7 +155,7 @@ void print_array(int n, int *arr){
  * @param n number of elements in the array
  * @returns the index of the first min element
  */
-int min_array(int n, int *arr){
+int min_array(int *arr, int n){
     int min_index = 0;
     int min_int = INT_MAX;
     for(int i = 0; i < n; ++i){
@@ -127,6 +165,24 @@ int min_array(int n, int *arr){
         }
     }
     return min_index;
+}
+
+/*
+ * Searches for the largest element in an array of integers (O(n))
+ * @param arr pointer to the beginning
+ * @param n number of elements in the array
+ * @returns the index of the first max element
+ */
+int max_array(int *arr, int n){
+    int max_index = 0;
+    int max_int = INT_MIN;
+    for(int i = 0; i < n; ++i){
+        if(arr[i] > max_int){ 
+            max_index = i;
+            max_int = arr[i];
+        }
+    }
+    return max_index;
 }
 
 /*
