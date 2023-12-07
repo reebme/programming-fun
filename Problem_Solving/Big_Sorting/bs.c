@@ -19,6 +19,7 @@ int main(int argc, char *argv[]){
     
     big_int integers[no_elem];
     size_t max_int_len = 0;
+    size_t max_len_len = 0;
     start = clock();
     for(int i = 0; i < no_elem; ++i){
         integers[i].num = get_line(in_file);
@@ -27,12 +28,15 @@ int main(int argc, char *argv[]){
             max_int_len = integers[i].len;
     }
     fclose(in_file);
+    max_len_len = digit_no(max_int_len);
     end = clock();
     time_elapsed = ((double)(end - start))/CLOCKS_PER_SEC;
     printf("Time elapsed on reading and preprocessing input: %f seconds\n", time_elapsed);
     
     start = clock();
-    radix_sort((big_int *)integers, no_elem, max_int_len);
+    if(max_int_len > 1000)
+        radix_sort_with_buckets((big_int *)integers, no_elem, max_len_len);
+    else radix_sort((big_int *)integers, no_elem, max_int_len);
     end = clock();
     time_elapsed = ((double)(end - start))/CLOCKS_PER_SEC;
     printf("Time elapsed on radix sort: %f \n", time_elapsed);
