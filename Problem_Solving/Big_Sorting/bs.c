@@ -41,8 +41,8 @@ int main(int argc, char *argv[]){
     time_elapsed = ((double)(end - start))/CLOCKS_PER_SEC;
     printf("Time elapsed on radix sort: %f \n", time_elapsed);
 
-    for(int i = 0; i < no_elem; ++i){
+/*    for(int i = 0; i < no_elem; ++i){
         printf("%s\n", integers[i].num);
         free(integers[i].num);
-    }
+    }*/
 }
